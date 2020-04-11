@@ -6,7 +6,17 @@ import pandas as pd
 import datetime
 
 def index(request):
-    return render(request, "app/index.html", context={
+    return render(request, "app/index.html")
+
+
+def earthquakes(request):
+    return render(request, "app/earthquakes.html", context={
+        "earthquakes": list(Earthquake.objects.all())
+    })
+
+
+def forest_fires(request):
+    return render(request, "app/forest_fires.html", context={
         "earthquakes": list(Earthquake.objects.all())
     })
 
