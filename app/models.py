@@ -8,4 +8,4 @@ class Earthquake(models.Model):
     magnitude = models.DecimalField(max_digits=10, decimal_places=5)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
