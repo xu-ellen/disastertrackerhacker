@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import HttpResponse
-from .models import Earthquake
+from .models import Earthquake, ForestFire
 import pandas as pd
 import datetime
 
@@ -17,7 +17,7 @@ def earthquakes(request):
 
 def forest_fires(request):
     return render(request, "app/forest_fires.html", context={
-        "earthquakes": list(Earthquake.objects.all())
+        "forest_fires": list(ForestFire.objects.all())
     })
 
 
@@ -33,5 +33,22 @@ def save_earthquake_data(request):
             depth=row["Depth"],
             magnitude=row["Magnitude"]
         )
+
+    return HttpResponse("boi")
+
+
+def save_forestfire_data(request):
+    ForestFire.objects.all().delete() # Clearing table
+
+    data = pd.read_csv(staticfiles_storage.path('Fires.csv'))
+    for index, row in data.iterrows():
+        ForestFire.objects.create(
+            name=row["FIRE_NAME"],
+            year=row["FIRE_YEAR"],
+            latitude=row["LATITUDE"],
+            longitude=row["LONGITUDE"],
+            # size=row["FIRE_SIZE"],
+        )
+        # print(row["FIRE_SIZE"])
 
     return HttpResponse("boi")

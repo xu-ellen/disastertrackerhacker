@@ -14,10 +14,8 @@ class Earthquake(models.Model):
 class ForestFire(models.Model):
     name = models.CharField(max_length=50)
     year = models.CharField(max_length=10)
-    latitude = models.DecimalField(max_digits=10, decimal_places=5)
-    longitude = models.DecimalField(max_digits=10, decimal_places=5)
-    size = models.DecimalField(max_digits=5, decimal_places=3)
-    size_class = models.CharField(max_length=1)
-    
+    latitude = models.DecimalField(max_digits=15, decimal_places=10)
+    longitude = models.DecimalField(max_digits=15, decimal_places=5)
+
     def __str__(self):
         return self.name

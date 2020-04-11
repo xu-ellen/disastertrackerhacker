@@ -13,7 +13,6 @@
     }
   </style>
   <h1>Forest Fires</h1>
-  <p id="earthquakes" style="display: none">{{earthquakes}}</p>
   <div id="map"></div>
   <script>
       // Note: This example requires that you consent to location sharing when
@@ -114,15 +113,15 @@
             });
         }
 
-        {% for earthquake in earthquakes %}
+        {% for forest_fire in forest_fires %}
           // Making a marker
-          var marker = new google.maps.Marker({position: {lat: {{earthquake.latitude}}, lng: {{earthquake.longitude}}}, map: map, title: "earthquake-{{earthquake.latitude}}"});
+          var marker = new google.maps.Marker({position: {lat: {{forest_fire.latitude}}, lng: {{forest_fire.longitude}}}, map: map, title: "forest_fire-{{forest_fire.latitude}}"});
 
           // Making info popup window
           var infowindow = new google.maps.InfoWindow();
 
           // Adding info window to marker on click
-          bindInfoWindow(marker, map, infowindow, "<div>Date: {{earthquake.date}}</div><div>Magnitude:  {{earthquake.magnitude}}</div><div>Depth: {{earthquake.depth}}</div><br><div>Latitude: {{earthquake.latitude}}</div><div>longitude: {{earthquake.longitude}}</div>");
+          bindInfoWindow(marker, map, infowindow, "<div>Date: {{forest_fire.date}}</div><div>Magnitude:  {{forest_fire.magnitude}}</div><div>Depth: {{forest_fire.depth}}</div><br><div>Latitude: {{forest_fire.latitude}}</div><div>longitude: {{forest_fire.longitude}}</div>");
         {% endfor %}
       }
 
