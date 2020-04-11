@@ -122,7 +122,7 @@
           var infowindow = new google.maps.InfoWindow();
 
           // Adding info window to marker on click
-          bindInfoWindow(marker, map, infowindow, "Latitude: {{earthquake.latitude}}\nLongitude: {{earthquake.longitude}}\nMagnitude:  {{earthquake.magnitude}}\nDepth: {{earthquake.depth}}");
+          bindInfoWindow(marker, map, infowindow, "<div>Date: {{earthquake.date}}</div><div>Magnitude:  {{earthquake.magnitude}}</div><div>Depth: {{earthquake.depth}}</div><br><div>Latitude: {{earthquake.latitude}}</div><div>longitude: {{earthquake.longitude}}</div>");
         {% endfor %}
       }
 

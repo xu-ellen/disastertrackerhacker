@@ -7,8 +7,7 @@ import datetime
 
 def index(request):
     return render(request, "app/index.html", context={
-        "earthquakes": list(Earthquake.objects.all()),
-        "randomlist": [1,2,3]
+        "earthquakes": list(Earthquake.objects.all())
     })
 
 
