@@ -5,6 +5,7 @@ from .models import Earthquake, ForestFire, Hurricane
 import numpy as np
 import pandas as pd
 import pickle
+import boto3
 from sklearn.ensemble import RandomForestRegressor
 import datetime
 import time
@@ -92,12 +93,25 @@ def predict_earthquake_stats(request):
 
     date = time.mktime(dt.timetuple())
 
-    filename = staticfiles_storage.path('finalized_model.sav')
+    cred = boto3.Session().get_credentials()
+    ACCESS_KEY = cred.access_key
+    SECRET_KEY = cred.secret_key
+
+    s3client = boto3.client('s3',
+                            aws_access_key_id = ACCESS_KEY,
+                            aws_secret_access_key = SECRET_KEY,
+                           )
+
+    response = s3client.get_object(Bucket='calix-assets', Key='finalized_model.sav')
+    print(response)
+    body = response['Body'].read()
+    print(body)
+    loaded_model = pickle.loads(body)
 
     user_input = [lat, lng, date]  # takes user input
     user_array = np.asarray(user_input).reshape(1,-1)
 
-    loaded_model = pickle.load(open(filename, 'rb'))
+    # loaded_model = pickle.load(open(filename, 'rb'))
     predict = loaded_model.predict(user_array)
 
     return JsonResponse({
