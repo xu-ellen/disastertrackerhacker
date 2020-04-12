@@ -7,6 +7,7 @@ import pandas as pd
 import pickle
 from sklearn.ensemble import RandomForestRegressor
 import datetime
+import time
 
 def index(request):
     return render(request, "app/index.html")
@@ -80,9 +81,18 @@ def predict_earthquake_stats(request):
     lat = request.GET.get("lat")
     lng = request.GET.get("lng")
 
+    dt = datetime.datetime(2020, 4, 12, 0, 0, 0)
+    print(dt)
+    if request.GET.get("date"):
+        date = request.GET.get("date")
+        date_list = [int(i) for i in date.split("-")]
+        dt = datetime.datetime(date_list[0], date_list[1], date_list[2], 0, 0, 0)
+
+    date = time.mktime(dt.timetuple())
+
     filename = staticfiles_storage.path('finalized_model.sav')
 
-    user_input = [19.246,145.616]  # takes user input
+    user_input = [lat, lng, date]  # takes user input
     user_array = np.asarray(user_input).reshape(1,-1)
 
     loaded_model = pickle.load(open(filename, 'rb'))

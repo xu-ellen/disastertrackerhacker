@@ -17,10 +17,21 @@
     }
   </style>
   <h1>Earthquakes</h1>
+  <div>
+    <input type="text" id="lat" placeholder="Latitude">
+    <input type="text" id="lng" placeholder="Longitude">
+    <input type="date" id="inputDate" placeholder="Date">
+    <button onclick="predictEarthquakeStats(true)">Predict!</button>
+  </div>
+  <br>
+  <strong>OR</strong>
+  <br>
   <button onclick="predictEarthquakeStats(false)">Predict from my location!</button>
   <p id="earthquake-stats"></p>
   <div id="map"></div>
   <script>
+      document.getElementById('inputDate').valueAsDate = new Date();
+
       var map, infoWindow;
       function bindInfoWindow(marker, map, infowindow, html) {
           marker.addListener('click', function() {
@@ -31,7 +42,19 @@
 
       function predictEarthquakeStats(fromUserInput) {
         if (fromUserInput) {
-          alert("user input");
+          var lat = document.getElementById("lat").value;
+          var lng = document.getElementById("lng").value;
+          var date = document.getElementById("inputDate").value;
+          
+          fetch("/api/predict-earthquake-stats/?lat=" + lat + "&lng=" + lng + "&date=" + date, {
+            method: "GET"
+          }).then((response) => {
+            return response.json();
+          }).then((response) => {
+            var earthquakeStatsContainer = document.getElementById("earthquake-stats");
+            earthquakeStatsContainer.innerHTML = "<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>";
+            earthquakeStatsContainer.style.display = "block";
+          });
         } else {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -48,7 +71,7 @@
                 var earthquakeStatsContainer = document.getElementById("earthquake-stats");
                 earthquakeStatsContainer.innerHTML = "<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>";
                 earthquakeStatsContainer.style.display = "block";
-              })
+              });
             }, function() {
               handleLocationError(true, infoWindow, map.getCenter());
             });
