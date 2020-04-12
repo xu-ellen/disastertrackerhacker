@@ -27,7 +27,6 @@
   <strong>OR</strong>
   <br>
   <button onclick="predictEarthquakeStats(false)">Predict from my location!</button>
-  <p id="earthquake-stats"></p>
   <div id="map"></div>
   <script>
       document.getElementById('inputDate').valueAsDate = new Date();
@@ -51,10 +50,6 @@
           }).then((response) => {
             return response.json();
           }).then((response) => {
-            var earthquakeStatsContainer = document.getElementById("earthquake-stats");
-            earthquakeStatsContainer.innerHTML = "<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>";
-            earthquakeStatsContainer.style.display = "block";
-
             var pos = {lat: parseInt(response.lat), lng: parseInt(response.lng)};
             infoWindow = new google.maps.InfoWindow;
             infoWindow.setPosition(pos);
@@ -75,10 +70,6 @@
               }).then((response) => {
                 return response.json();
               }).then((response) => {
-                var earthquakeStatsContainer = document.getElementById("earthquake-stats");
-                earthquakeStatsContainer.innerHTML = "<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>";
-                earthquakeStatsContainer.style.display = "block";
-
                 infoWindow = new google.maps.InfoWindow;
                 infoWindow.setPosition(pos);
                 infoWindow.setContent("<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>");
