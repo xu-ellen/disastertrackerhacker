@@ -33,15 +33,18 @@ def hurricanes(request):
 def save_earthquake_data(request):
     Earthquake.objects.all().delete() # Clearing table
 
-    data = pd.read_csv(staticfiles_storage.path('hicalix.csv'))
+    data = pd.read_csv(staticfiles_storage.path('database.csv'))
     for index, row in data.iterrows():
-        Earthquake.objects.create(
-            date=datetime.datetime.strptime(row["Date"], '%m/%d/%Y'),
-            latitude=row["Latitude"],
-            longitude=row["Longitude"],
-            depth=row["Depth"],
-            magnitude=row["Magnitude"]
-        )
+        try:
+            Earthquake.objects.create(
+                date=datetime.datetime.strptime(row["Date"], '%m/%d/%Y'),
+                latitude=row["Latitude"],
+                longitude=row["Longitude"],
+                depth=row["Depth"],
+                magnitude=row["Magnitude"]
+            )
+        except:
+            pass
 
     return HttpResponse("boi")
 
