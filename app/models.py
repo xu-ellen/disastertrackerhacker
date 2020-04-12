@@ -23,8 +23,9 @@ class ForestFire(models.Model):
 
 class Hurricane(models.Model):
     name = models.CharField(max_length=50)
+    # date = models.DateField()
     latitude = models.DecimalField(max_digits=15, decimal_places=10)
     longitude = models.DecimalField(max_digits=15, decimal_places=10)
 
     def __str__(self):
-        return self.name 
+        return self.name
