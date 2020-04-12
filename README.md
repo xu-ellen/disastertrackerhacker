@@ -21,4 +21,4 @@ niche metrics centered on meteorological or even economic data. The Natural Disa
 has enourmous potential not only the private consumer base sector but in the massive, established 
 industries of crude oil, agriculture, natural resources, and real estate.
 
-Our ML models and notebooks are held in the `/static/` directory.
+Our ML models and notebooks are held in the `/staticfiles/` directory.
