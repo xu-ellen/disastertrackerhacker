@@ -20,6 +20,11 @@ def forest_fires(request):
         "forest_fires": list(ForestFire.objects.all())
     })
 
+def hurricanes(request):
+    return render(request, "app/hurricanes.html", context={
+        "hurricanes": list(Hurricane.objects.all())
+    })
+
 
 def save_earthquake_data(request):
     Earthquake.objects.all().delete() # Clearing table
