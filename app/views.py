@@ -82,7 +82,6 @@ def predict_earthquake_stats(request):
     lng = request.GET.get("lng")
 
     dt = datetime.datetime(2020, 4, 12, 0, 0, 0)
-    print(dt)
     if request.GET.get("date"):
         date = request.GET.get("date")
         date_list = [int(i) for i in date.split("-")]
@@ -100,5 +99,7 @@ def predict_earthquake_stats(request):
 
     return JsonResponse({
         "magnitude": predict[0][0],
-        "depth": predict[0][1]
+        "depth": predict[0][1],
+        "lat": lat,
+        "lng": lng
     })

@@ -45,7 +45,7 @@
           var lat = document.getElementById("lat").value;
           var lng = document.getElementById("lng").value;
           var date = document.getElementById("inputDate").value;
-          
+
           fetch("/api/predict-earthquake-stats/?lat=" + lat + "&lng=" + lng + "&date=" + date, {
             method: "GET"
           }).then((response) => {
@@ -54,6 +54,13 @@
             var earthquakeStatsContainer = document.getElementById("earthquake-stats");
             earthquakeStatsContainer.innerHTML = "<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>";
             earthquakeStatsContainer.style.display = "block";
+
+            var pos = {lat: parseInt(response.lat), lng: parseInt(response.lng)};
+            infoWindow = new google.maps.InfoWindow;
+            infoWindow.setPosition(pos);
+            infoWindow.setContent("<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>");
+            infoWindow.open(map);
+             map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
           });
         } else {
           if (navigator.geolocation) {
@@ -71,7 +78,14 @@
                 var earthquakeStatsContainer = document.getElementById("earthquake-stats");
                 earthquakeStatsContainer.innerHTML = "<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>";
                 earthquakeStatsContainer.style.display = "block";
+
+                infoWindow = new google.maps.InfoWindow;
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("<div>Magnitude: " + response.magnitude + "</div><div>Depth: " + response.depth + "</div>");
+                infoWindow.open(map);
+                 map.setCenter(new google.maps.LatLng(pos.lat, pos.lng));
               });
+
             }, function() {
               handleLocationError(true, infoWindow, map.getCenter());
             });
