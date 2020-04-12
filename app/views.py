@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Earthquake, ForestFire, Hurricane
 import numpy as np
 import pandas as pd
@@ -13,15 +13,6 @@ def index(request):
 
 
 def earthquakes(request):
-    filename = staticfiles_storage.path('finalized_model.sav')
-
-    user_input = [19.246,145.616]  # takes user input
-    user_array = np.asarray(user_input).reshape(1,-1)
-
-    loaded_model = pickle.load(open(filename, 'rb'))
-    predict = loaded_model.predict(user_array)
-    print(predict)
-
     return render(request, "app/earthquakes.html", context={
         "earthquakes": list(Earthquake.objects.all())
     })
@@ -82,3 +73,22 @@ def save_hurricane_data(request):
         )
 
     return HttpResponse("boi")
+
+
+# API PREDICTION ROUTES
+def predict_earthquake_stats(request):
+    lat = request.GET.get("lat")
+    lng = request.GET.get("lng")
+
+    filename = staticfiles_storage.path('finalized_model.sav')
+
+    user_input = [19.246,145.616]  # takes user input
+    user_array = np.asarray(user_input).reshape(1,-1)
+
+    loaded_model = pickle.load(open(filename, 'rb'))
+    predict = loaded_model.predict(user_array)
+
+    return JsonResponse({
+        "magnitude": predict[0][0],
+        "depth": predict[0][1]
+    })
