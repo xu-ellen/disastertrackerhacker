@@ -10,6 +10,10 @@
       display: none;
     }
 
+    .predict_btn {
+      border-radius: 5px;
+    }
+
     html, body {
       height: 100%;
       margin: 0;
@@ -18,10 +22,10 @@
   </style>
 <h1 style="background-color:hsla(9, 100%, 64%, 0.5); text-align:center; font-family:serif; border:2px solid Tomato">Earthquakes</h1>
   <div>
-    <input type="text" id="lat" placeholder="Latitude">
-    <input type="text" id="lng" placeholder="Longitude">
-    <input type="date" id="inputDate" placeholder="Date">
-    <button onclick="predictEarthquakeStats(true)">Predict!</button>
+    <input type="text" class="form-control" placeholder="Latitude" id="lat inputDefault">
+    <input type="text" class="form-control" placeholder="Longitude" id="lng inputDefault">
+    <input type="date" class="form-control" placeholder="Date" id="inputDate inputDefault">
+    <button onclick="predictEarthquakeStats(true)" type="button" class="predict_btn btn btn-primary">Predict!</button>
   </div>
   <br>
   <strong>OR</strong>
