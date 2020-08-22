@@ -19,4 +19,4 @@ niche metrics centered on meteorological or even economic data. The Natural Disa
 has enourmous potential not only the private consumer base sector but in the massive, established 
 industries of crude oil, agriculture, natural resources, and real estate.
 
-Earthquake ML models (created by Ellen) are held in the `/staticfiles/` directory.
+Earthquake ML model (created by Ellen) is held in the main directory.
